@@ -83,9 +83,9 @@ lowFrame = Frame(width=w,height=200, bg='white',borderwidth=0)
 #changeState
 def changeState():
     if (player.playback_status() == "Playing"):
-        player.pause()
+        player.play_pause()
     elif(player.playback_status() == "Paused"):
-        player.load(cur_url)
+        player.play_pause()
     else:
         pass
     lab1.set(rad_urls_ids[cur_index])
@@ -104,7 +104,8 @@ def decVol():
         player.set_volume(tmpv - 0.1)
 
 def killStream():
-    exit(1)
+    player.stop()
+    root.destroy()
 
 #play
 b1 = Button(lowFrame, image=img3, bg='white',borderwidth=0,relief="flat", highlightthickness=0,command=changeState)
