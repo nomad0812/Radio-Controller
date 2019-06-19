@@ -1,0 +1,5 @@
+<19/06/19>
+[+]Fixed OMXPlayer not closing
+[+]Fixed TKinter window not closing 
+[+]Fixed play/pause not toggling correctly
+[!]TODO: Remove Stop button and let play button change based on playing state
