@@ -3,3 +3,4 @@
 [+]Fixed TKinter window not closing 
 [+]Fixed play/pause not toggling correctly
 [!]TODO: Remove Stop button and let play button change based on playing state
+[+]Removed stop button and added image toggle for play button based on playing status
