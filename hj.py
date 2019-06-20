@@ -19,8 +19,6 @@ def getStationList(fileName):
  
     for line in statFile:
         row = line.split(': ')
-        #this is done to the list index is within range
-        #row.append('')
         stations.append(row)
 
     statFile.close()
@@ -31,10 +29,10 @@ rad_urls = getStationList("radio_stations.txt")
 
 #cur_url = 'http://5.63.151.52:7032/hd#.mp3'
 cur_index = 0
-cur_url = rad_urls[cur_index][1]
+#cur_url = rad_urls[cur_index][1]
 
 try:
-    player = OMXPlayer(cur_url)
+    player = OMXPlayer(rad_urls[cur_index][1])
 except:
     print 'OMXPlayer instance couldn\'t be created'
     exit(1)
@@ -46,6 +44,7 @@ root.title("Radio Controller")
 
 #Screen width and height
 w = root.winfo_screenwidth()
+
 
 #TOP FRAME(STATION NAME AND TOGGLE NEXT OR PREV. STAT.)
 topFrame = Frame(height=100, width=w,bg='white')
@@ -68,7 +67,10 @@ def changeDropdown(*args):
 	lab1.set(" "+lab1.get())
 
 #Creating dropdown for stations
-choices = [" Star"," Mix"," Power"] #EDIT THIS TO CORESPOND W/ ID's of radio stations in rad_urls_id
+choices = []
+for i in range (0, len(rad_urls)):
+	choices.append(rad_urls[i][0])
+
 statOpt = OptionMenu(topFrame, lab1, *choices)
 statOpt.configure(indicatoron=0,compound='left',image=img7,bg='white',borderwidth=0,relief="flat", highlightthickness=0, font=('Verdana',24))
 statOpt.grid(row=0, column=1, padx=20)
@@ -78,9 +80,35 @@ lab1.trace('w',changeDropdown)
 #Middle frame
 midFrame = Frame(bg='white',width=w,height=100)
 
+#change station
+#BUG , when supplied just a string it works but when referenced one like player.load(stat) it doesn't work
+def nextStation():
+	global cur_index
+	if cur_index != (len(rad_urls) - 1):
+		cur_index += 1
+		print rad_urls[cur_index][1]
+		lab1.set(rad_urls[cur_index][0])
+		stat = ''
+		stat = stat + rad_urls[cur_index][1]	
+		#player.load(stat)
+		player.load('http://pureplay.cdnstream1.com/6043_128.mp3')
+	else:
+		pass
 
-togglePrev = Button(midFrame, image=img1, bg='white',borderwidth=0, relief="flat", highlightthickness=0)
-toggleNext = Button(midFrame, image=img2, bg='white',borderwidth=0,relief="flat", highlightthickness=0)
+def prevStation():
+	global cur_index
+	if cur_index > 1:
+		cur_index -= 1
+		lab1.set(rad_urls[cur_index][0])
+		stat = ''
+		stat = stat + rad_urls[cur_index][1]	
+		#player.load(stat)
+		player.load('http://pureplay.cdnstream1.com/6033_128.mp3')
+	else:
+		pass
+
+togglePrev = Button(midFrame, image=img1, bg='white',borderwidth=0, relief="flat", highlightthickness=0, command=prevStation)
+toggleNext = Button(midFrame, image=img2, bg='white',borderwidth=0,relief="flat", highlightthickness=0, command=nextStation)
 togglePrev.grid(row=0, column=0, sticky="WE", padx=80)
 toggleNext.grid(row=0, column=1, sticky="EW", padx=80)
 
@@ -101,18 +129,16 @@ def changeState():
         b1.configure(image=img9)
     else:
         pass
-    lab1.set(rad_urls_ids[cur_index])
-
-tmpv = player.volume()
 
 #Volume control
 def incVol():
-    tmpv = player.volume()
-    if(tmpv < 10):
+   tmpv = player.volume()
+   if(tmpv < 10):
         player.set_volume(tmpv + 0.1)
     
 
 def decVol():
+    tmpv = player.volume()
     if(tmpv > 0):
         player.set_volume(tmpv - 0.1)
 
