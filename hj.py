@@ -50,15 +50,15 @@ w = root.winfo_screenwidth()
 topFrame = Frame(height=100, width=w,bg='white')
 
 #Loading images to be used later on
-img1 = PhotoImage(file="previous.png")
-img2 = PhotoImage(file="next.png")
-img3 = PhotoImage(file="play.png")
-img4 = PhotoImage(file="stop.png")
-img5 = PhotoImage(file="VInc.png")
-img6 = PhotoImage(file="VDec.png")
-img7 = PhotoImage(file="list.png")
-img8 = PhotoImage(file="exit.png")
-img9 = PhotoImage(file="pause.png")
+img1 = PhotoImage(file="images/previous.png")
+img2 = PhotoImage(file="images/next.png")
+img3 = PhotoImage(file="images/play.png")
+img4 = PhotoImage(file="images/stop.png")
+img5 = PhotoImage(file="images/VInc.png")
+img6 = PhotoImage(file="images/VDec.png")
+img7 = PhotoImage(file="images/list.png")
+img8 = PhotoImage(file="images/exit.png")
+img9 = PhotoImage(file="images/pause.png")
 
 lab1 = StringVar()
 lab1.set(rad_urls[cur_index][0])
@@ -86,7 +86,7 @@ def nextStation():
 	global cur_index
 	if cur_index != (len(rad_urls) - 1):
 		cur_index += 1
-		print rad_urls[cur_index][1]
+		#print rad_urls[cur_index][1]
 		lab1.set(rad_urls[cur_index][0])
 		stat = ''
 		stat = stat + rad_urls[cur_index][1]	
