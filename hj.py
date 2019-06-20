@@ -49,6 +49,7 @@ img5 = PhotoImage(file="VInc.png")
 img6 = PhotoImage(file="VDec.png")
 img7 = PhotoImage(file="list.png")
 img8 = PhotoImage(file="exit.png")
+img9 = PhotoImage(file="pause.png")
 
 lab1 = StringVar()
 lab1.set(rad_urls_ids[cur_index])
@@ -84,8 +85,10 @@ lowFrame = Frame(width=w,height=200, bg='white',borderwidth=0)
 def changeState():
     if (player.playback_status() == "Playing"):
         player.play_pause()
+        b1.configure(image=img3)
     elif(player.playback_status() == "Paused"):
         player.play_pause()
+        b1.configure(image=img9)
     else:
         pass
     lab1.set(rad_urls_ids[cur_index])
@@ -108,11 +111,11 @@ def killStream():
     root.destroy()
 
 #play
-b1 = Button(lowFrame, image=img3, bg='white',borderwidth=0,relief="flat", highlightthickness=0,command=changeState)
-b1.grid(row=0, column=1,padx=30,sticky="EW")
+b1 = Button(lowFrame, image=img9, bg='white',borderwidth=0,relief="flat", highlightthickness=0,command=changeState)
+b1.grid(row=0, column=1,padx=60,sticky="EW")
 #stop
-b2 = Button(lowFrame, image=img4, bg='white',borderwidth=0,relief="flat", highlightthickness=0, command=changeState)
-b2.grid(row=0, column=2, padx=30,sticky="EW")
+#b2 = Button(lowFrame, image=img4, bg='white',borderwidth=0,relief="flat", highlightthickness=0, command=changeState)
+#b2.grid(row=0, column=2, padx=30,sticky="EW")
 #Volume increase
 b3 = Button(lowFrame, image=img5, bg='white',borderwidth=0,relief="flat", highlightthickness=0, command=incVol)
 b3.grid(row=0, column=3, padx=30,sticky="EW")
