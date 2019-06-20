@@ -11,6 +11,16 @@ from omxplayer.player import OMXPlayer
 from sys import exit
 from Tkinter import *
 
+def newlineStrip(x):
+    
+    y = ''
+    
+    for i in x:
+        if i != '\n':
+            y += i
+    
+    return y
+
 def getStationList(fileName):
 
     stations = []
@@ -19,7 +29,10 @@ def getStationList(fileName):
  
     for line in statFile:
         row = line.split(': ')
-        stations.append(row)
+	retRow = []
+        for x in row:
+		retRow.append(newlineStrip(x))
+        stations.append(retRow)
 
     statFile.close()
 
@@ -81,29 +94,24 @@ lab1.trace('w',changeDropdown)
 midFrame = Frame(bg='white',width=w,height=100)
 
 #change station
-#BUG , when supplied just a string it works but when referenced one like player.load(stat) it doesn't work
 def nextStation():
 	global cur_index
 	if cur_index != (len(rad_urls) - 1):
 		cur_index += 1
-		#print rad_urls[cur_index][1]
-		lab1.set(rad_urls[cur_index][0])
-		stat = ''
-		stat = stat + rad_urls[cur_index][1]	
-		#player.load(stat)
-		player.load('http://pureplay.cdnstream1.com/6043_128.mp3')
+		lab1.set(rad_urls[cur_index][0])	
+		player.load(rad_urls[cur_index][1])
+		#player.load('http://pureplay.cdnstream1.com/6043_128.mp3')
+		
 	else:
 		pass
 
 def prevStation():
 	global cur_index
-	if cur_index > 1:
+	if cur_index >= 1:
 		cur_index -= 1
 		lab1.set(rad_urls[cur_index][0])
-		stat = ''
-		stat = stat + rad_urls[cur_index][1]	
-		#player.load(stat)
-		player.load('http://pureplay.cdnstream1.com/6033_128.mp3')
+		player.load(rad_urls[cur_index][1])
+		#player.load('http://pureplay.cdnstream1.com/6033_128.mp3')
 	else:
 		pass
 
