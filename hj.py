@@ -77,7 +77,13 @@ lab1 = StringVar()
 lab1.set(rad_urls[cur_index][0])
 
 def changeDropdown(*args):
-	lab1.set(" "+lab1.get())
+	name = lab1.get()
+	lab1.set(" "+ name)
+	for x in range(0, len(rad_urls)):
+		if name == rad_urls[x][0]:
+			global cur_index 
+			cur_index = x
+			player.load(rad_urls[x][1])
 
 #Creating dropdown for stations
 choices = []
