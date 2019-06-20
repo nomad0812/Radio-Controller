@@ -11,17 +11,27 @@ from omxplayer.player import OMXPlayer
 from sys import exit
 from Tkinter import *
 
-rad_urls = {
-        'Power 103': 'http://5.63.151.52:7032/hd#.mp3'
-        }
+def getStationList(fileName):
 
-rad_urls_ids = {
-        0 : 'Power 103'
-        }
+    stations = []
+
+    statFile = open(fileName)
+ 
+    for line in statFile:
+        row = line.split(': ')
+        #this is done to the list index is within range
+        #row.append('')
+        stations.append(row)
+
+    statFile.close()
+
+    return stations
+
+rad_urls = getStationList("radio_stations.txt")
 
 #cur_url = 'http://5.63.151.52:7032/hd#.mp3'
-cur_index = 0;
-cur_url = rad_urls[rad_urls_ids[cur_index]]
+cur_index = 0
+cur_url = rad_urls[cur_index][1]
 
 try:
     player = OMXPlayer(cur_url)
@@ -52,7 +62,7 @@ img8 = PhotoImage(file="exit.png")
 img9 = PhotoImage(file="pause.png")
 
 lab1 = StringVar()
-lab1.set(rad_urls_ids[cur_index])
+lab1.set(rad_urls[cur_index][0])
 
 def changeDropdown(*args):
 	lab1.set(" "+lab1.get())
